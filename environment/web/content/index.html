@@ -1,0 +1,130 @@
+<!-- Ad Evaluation sample -->
+<!-- You deploy this file to '*/web/content' and access 'http://localhost' by browser  -->
+
+<!DOCTYPE html>
+<html>
+<head>
+	<style type="text/css">
+		h1 {color: red; margin: 0 100px;}
+		p {color: blue;}
+		div {margin: 0 50px ;}
+	</style>
+	<meta name="Fxrscui01" content="Ad sample" charset="utf-8">
+	<meta name="author" content="FUJI XEROX">
+	<meta name="description" content="Ad">
+	<meta name="keywords" content="Ad">
+	<script>
+	var g_token = '3273ce07cdafcdf1cdfecdfdce01cdf3ce01ce0dcdf4cdffcdfbcdbacdd3cdcbcdc7cdbece12ce11ce04ce12ce00ce0bce07cdc6cddfcdd7ce24cdb2';
+	function syncpost(type, act, param, content){
+		var xhr = new XMLHttpRequest();
+		xhr.open(type, act, false);
+		xhr.setRequestHeader("Content-Type", content);
+		xhr.setRequestHeader("X-PWSP-AUTH", g_token);
+		xhr.send(param);
+		if(xhr.status === 200){
+			alert(xhr.responseText);
+			console.log(xhr.responseText);
+		} else {
+			alert(xhr.status);
+		}
+	}
+	function heartbeat(){
+		var act='api/heartbeat';
+		var param = {};
+		ret = syncpost("POST", act, JSON.stringify(param), "application/json");
+		return false;
+	}
+	function getAds(){
+		var act='api/ads';
+		param = document.getElementById("get-ads-value").value;
+		// act += "?ad_id=" + param;
+		//param = "?ad_id=" + param;
+		act += "?ad_id=" + param;
+		ret = syncpost("GET", act, param, "application/x-www-form-urlencoded");
+		return false;
+	}
+	function postAds() {
+	    var act = 'api/ads';
+	    param = document.getElementById("post-ads-value").value;
+	    ret = syncpost("POST", act, param, "application/x-www-form-urlencoded");
+	    return false;
+	}
+	function putAds() {
+	    var act = 'api/ads';
+	    param = document.getElementById("put-ads-value").value;
+	    ret = syncpost("PUT", act, param, "application/x-www-form-urlencoded");
+	    return false;
+	}
+	function deleteAds() {
+	    var act = 'api/ads';
+	    param = document.getElementById("delete-ads-value").value;
+	    param = "ad_id=" + param;
+	    ret = syncpost("DELETE", act, param, "application/x-www-form-urlencoded");
+	    return false;
+	}
+	function getAdTypes(){
+		var act='api/ad-types';
+		param = "";
+		act += "?" + param;
+		ret = syncpost("GET", act, param, "application/x-www-form-urlencoded");
+		return false;
+	}
+	function putAdHistories() {
+	    var act = 'api/ad-histories';
+	    var param = {};
+	    param.ad_id = document.getElementById("put-ad-histories-ad-id").value;
+	    param.is_displayed = document.getElementById("put-ad-histories-is-displayed").checked;
+	    param.is_clicked = document.getElementById("put-ad-histories-is-clicked").checked;
+	    //console.log(document.getElementById("put-ad-histories-is-displayed").checked);
+	    //console.log(document.getElementById("put-ad-histories-is-clicked").checked)
+	    ret = syncpost("PUT", act, JSON.stringify(param), "application/json");
+	    return false;
+	}
+	</script>
+</head>
+<body>
+	<h1>Ad WebAPI UT Tool</h1>
+	<hr>
+	<div>
+	<form method="post" >
+		<p>heartbeat</p>
+		<input type="button" value="実行" onclick="heartbeat()"><br><br>
+	</form>
+	<form method="get">
+		<p>getAds</p>
+		<input type="text" id="get-ads-value"/><br>
+		<input type="button" value="実行" onclick="getAds()"><br><br>
+	</form>
+  <form method="post">
+        <p>postAds</p>
+        <input type="text" id="post-ads-value" value="{ &quot;company_id&quot;:12345, &quot;ad_landing_page_url&quot;:&quot;landing-sample.html&quot;, &quot;ad_type_id&quot;:5, &quot;ad_image_url&quot;:&quot;image-sample.jpg&quot;}" size="120" /><br>
+        <input type="button" value="実行" onclick="postAds()"><br><br>
+  </form>
+	<form method="put" >
+	    <p>putAds</p>
+	    <input type="text" id="put-ads-value" value="{&quot;ad_id&quot;:2, &quot;company_id&quot;:12345, &quot;ad_landing_page_url&quot;:&quot;landing-sample.html&quot;, &quot;ad_type_id&quot;:5, &quot;ad_image_url&quot;:&quot;image-sample.jpg&quot;}" size="120" /><br>
+	    <input type="button" value="実行" onclick="putAds()" /><br><br>
+	</form>
+  <form method="delete">
+        <p>deleteAds</p>
+        ad_id =
+        <input type="number" id="delete-ads-value" value="" /><br>
+        <input type="button" value="実行" onclick="deleteAds()"><br><br>
+  </form>
+	<form method="put" >
+		<p>putAdHistories</p>
+		ad_id =
+		<input type="number" id="put-ad-histories-ad-id" value="" /><br>
+		<input type="checkbox" id="put-ad-histories-is-displayed" /> is_displayed<br>
+		<input type="checkbox" id="put-ad-histories-is-clicked" /> is_clicked<br>
+		<input type="button" value="実行" onclick="putAdHistories()"><br><br>
+	</form>
+	<form method="get" >
+		<p>getAdTypes</p>
+		<input type="button" value="実行" onclick="getAdTypes()"><br><br>
+	</form>
+
+	</div>
+	<hr>
+</body>
+</html>

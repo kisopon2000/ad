@@ -1,0 +1,22 @@
+<config>
+  <log>
+    <maxfilecycle>3</maxfilecycle>
+    <maxfilesize>1048576</maxfilesize>
+    <level>INF</level>
+  </log>
+  <db>
+    <driver>{SQL Server}</driver>
+    <server>localhost\PWSP</server>
+    <dbname>ad</dbname>
+    <uid>Ad</uid>
+    <pwd>P@ssW0rd</pwd>
+    <memcache>
+      <enable>false</enable>
+      <server>pwsp-mysql-test.co5vakyamydd.ap-northeast-1.rds.amazonaws.com:11211</server>
+    </memcache>
+  </db>
+  <analysis>
+    <type>model</type>
+    <model>NearestNeighbors</model>
+  </analysis>
+</config>

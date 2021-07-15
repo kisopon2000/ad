@@ -1,0 +1,71 @@
+<!-- Ad Evaluation sample -->
+<!-- You deploy this file to '*/web/content' and access 'http://localhost' by browser  -->
+
+<!DOCTYPE html>
+<html>
+<head>
+	<style type="text/css">
+		h1 {color: red; margin: 0 100px;}
+		p {color: blue;}
+		div {margin: 0 50px ;}
+	</style>
+	<meta name="Fxrscui01" content="Ad sample" charset="utf-8">
+	<meta name="author" content="FUJI XEROX">
+	<meta name="description" content="Ad">
+	<meta name="keywords" content="Ad">
+	<script>
+	var g_token = '038efcecfc94fcd6fce3fce2fce6fcd8fce6fcf2fcd9fce4fce0fc9ffcb8fca1fcc6fcf6fcecfcecfca4fcddfcebfcf9fcf7fd01fcacfcb7fcaefd02fd01fcf4fd02fcf0fcfbfcf7fcb6fccffcc7fd14fca2';
+	function syncpost(type, act, param, content){
+		var xhr = new XMLHttpRequest();
+		xhr.open(type, act, false);
+		xhr.setRequestHeader("Content-Type", content);
+		xhr.setRequestHeader("X-PWSP-AUTH", g_token);
+		xhr.send(param);
+		if(xhr.status === 200){
+			alert(xhr.responseText);
+		} else {
+			alert(xhr.status);
+		}
+	}
+	function heartbeat(){
+		var act='api/heartbeat';
+		var param = {};
+		ret = syncpost("POST", act, JSON.stringify(param), "application/json");
+		return false;
+	}
+	function getAds(){
+		var act='api/ads';
+		param = "";
+		act += "?" + param;
+		ret = syncpost("GET", act, param, "application/x-www-form-urlencoded");
+		return false;
+	}
+	function getAdTypes(){
+		var act='api/ad-types';
+		param = "";
+		act += "?" + param;
+		ret = syncpost("GET", act, param, "application/x-www-form-urlencoded");
+		return false;
+	}
+	</script>
+</head>
+<body">
+	<h1>Ad WebAPI UT Tool</h1>
+	<hr>
+	<div>
+	<form method="post" >
+		<p>heartbeat</p>
+		<input type="button" value="実行" onclick="heartbeat()"><br><br>
+	</form>
+	<form method="get" >
+		<p>getAds</p>
+		<input type="button" value="実行" onclick="getAds()"><br><br>
+	</form>
+	<form method="get" >
+		<p>getAdTypes</p>
+		<input type="button" value="実行" onclick="getAdTypes()"><br><br>
+	</form>
+	</div>
+	<hr>
+</body>
+</html>
